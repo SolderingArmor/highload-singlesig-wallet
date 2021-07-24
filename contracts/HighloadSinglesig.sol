@@ -20,6 +20,7 @@ contract HighloadSinglesig is IHighloadSinglesig
     //========================================
     // Variables
     mapping(uint256 => uint64) _messages;
+    uint32                     _messageCount;
 
     //========================================
     // Error codes
@@ -66,24 +67,26 @@ contract HighloadSinglesig is IHighloadSinglesig
         
         tvm.accept();
         _messages[msgHash] = expireAt;
+        _messageCount += 1;
 
         return body;
     }
 
     //========================================
-    // Garbage collection to delete expired messages
+    // Garbage collection to delete expired messages.
+    // We can't go through all messages every time, it's slow, expensive and we can hit the limit of execution
+    // (1'000'000 gas) and contract will become unusable. We will go in batches of 50 instead, it will give us
+    // low fees (on messages when the list is below 50) and gc 50 messages at once for about 350'000 gas total.
     function gc() private inline 
     {
-        optional(uint256, uint64) elm = _messages.min();
-        
-        while(elm.hasValue())
+        if(_messageCount < 50){  return;  }
+
+        uint count = 0;        
+        for((uint256 msgHash, uint64 expireAt) : _messages) 
         {
-            (uint256 msgHash, uint64 expireAt) = elm.get();
-            if (expireAt <= now) 
-            {
-                delete _messages[msgHash];
-            }
-            elm = _messages.next(msgHash);
+            count += 1;
+            if(expireAt <= now) {  delete _messages[msgHash];  _messageCount -= 1;  }
+            if(count > 50){  return;  }
         }
     }
 

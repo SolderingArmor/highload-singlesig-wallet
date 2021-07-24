@@ -14,6 +14,8 @@ def getClient():
     config    = NetworkConfig(endpoints=endpoints)
     return TonClient(config=ClientConfig(network=config), is_core_async=True)
 
+print(getAbi("../bin/HighloadSinglesig.abi.json").value)
+
 # ==============================================================================
 # 
 # Create Wallet
