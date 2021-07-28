@@ -24,10 +24,9 @@ contract HighloadSinglesig is IHighloadSinglesig
 
     //========================================
     // Error codes
-    uint constant ERROR_MESSAGE_PUBKEY_IS_INCORRECT    = 100;
-    uint constant ERROR_MESSAGE_SENDER_IS_NOT_MY_OWNER = 101;
-    uint constant ERROR_MESSAGE_SENDER_IS_NOT_EXTERNAL = 102;
-    uint constant ERROR_MESSAGE_ALREADY_SENT           = 103;
+    uint constant ERROR_MESSAGE_SENDER_IS_NOT_MY_OWNER = 100;
+    uint constant ERROR_MESSAGE_SENDER_IS_NOT_EXTERNAL = 201;
+    uint constant ERROR_MESSAGE_ALREADY_SENT           = 202;
 
     //========================================
     // Modifiers
@@ -43,7 +42,7 @@ contract HighloadSinglesig is IHighloadSinglesig
     //
     constructor() public 
     {
-        require(msg.pubkey() == tvm.pubkey(), ERROR_MESSAGE_PUBKEY_IS_INCORRECT);
+        require(msg.pubkey() == tvm.pubkey(), ERROR_MESSAGE_SENDER_IS_NOT_MY_OWNER);
         tvm.accept();
     }
 
