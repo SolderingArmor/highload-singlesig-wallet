@@ -30,12 +30,12 @@ class HighloadSinglesig(object):
 
     # ========================================
     #
-    def sendTransaction(self, addressDest:str, value:int, bounce:bool, flags:int, payload:str):
-        result = self._call(functionName="sendTransaction", functionParams={"dest":addressDest, "value":value, "bounce":bounce, "flags":flags, "payload":payload}, signer=self.SIGNER)
+    def sendTransaction(self, addressDest:str, value:int, bounce:bool, flags:int, payload:str, signer: Signer = None):
+        result = self._call(functionName="sendTransaction", functionParams={"dest":addressDest, "value":value, "bounce":bounce, "flags":flags, "payload":payload}, signer=self.SIGNER if signer is None else signer)
         return result
 
-    def destroy(self, addressDest):
-        result = self._call(functionName="sendTransaction", functionParams={"dest":addressDest, "value":0, "bounce":False, "flags":128+32, "payload":""}, signer=self.SIGNER)
+    def destroy(self, addressDest, signer: Signer = None):
+        result = self._call(functionName="sendTransaction", functionParams={"dest":addressDest, "value":0, "bounce":False, "flags":128+32, "payload":""}, signer=self.SIGNER if signer is None else signer)
         return result
 
     # ========================================
