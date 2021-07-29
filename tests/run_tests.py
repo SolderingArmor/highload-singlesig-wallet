@@ -90,26 +90,14 @@ class Test_01_DeployAndTransfer(unittest.TestCase):
 
         result = self.hsig1.sendTransaction(addressDest=self.hsig2.ADDRESS, value=TON, bounce=False, flags=1, payload="")
         self.assertEqual(result[1]["errorCode"], 0)
-        
-        
-        #print("count:", len(self.hsig1.getMessages()["messages"]), "fees:", result[0].fees.gas_fee)
-        #msgArray = unwrapMessages(getClient(), result[0].transaction["out_msgs"], _getAbiArray())
-        #pprint(msgArray)
-        #pprint(self.hsig1.getMessages())
+
+        result = self.hsig1.sendTransaction(addressDest=self.hsig2.ADDRESS, value=TON, bounce=False, flags=1, payload="", signer=self.hsig2.SIGNER)
+        self.assertEqual(result[1]["errorCode"], 0)
         
         print("")
-        for i in range(0, 100):
+        for i in range(0, 60):
             result = self.hsig1.sendTransaction(addressDest=self.hsig2.ADDRESS, value=TON, bounce=False, flags=1, payload="")
             print("count:", len(self.hsig1.getMessages()["messages"]), "fees:", result[0].fees.gas_fee)
-            
-            #print(result[0].fees.gas_fee)
-            #msgArray = unwrapMessages(getClient(), result[0].transaction["out_msgs"], _getAbiArray())
-            #pprint(msgArray)
-
-
-            #messages = self.hsig1.getMessages()
-            #print("Total fees:",  , "Message count:", len(messages["messages"]))
-            #pprint(messages)
 
 
     # 5. Cleanup

@@ -12,6 +12,8 @@ struct Message
 }
 
 //================================================================================
+/// @title Highload Single Signature Wallet
+/// @author SuperArmor (https://t.me/SuperArmor)
 //
 interface IHighloadSinglesig
 {
