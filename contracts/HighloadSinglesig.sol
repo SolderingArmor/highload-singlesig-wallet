@@ -83,7 +83,7 @@ contract HighloadSinglesig is IHighloadSinglesig
         for((uint256 msgHash, uint64 expireAt) : _messages) 
         {
             count += 1;
-            if(expireAt <= now) {  delete _messages[msgHash];  _messageCount -= 1;  }
+            if(expireAt < now) {  delete _messages[msgHash];  _messageCount -= 1;  }
             if(count > 50){  return;  }
         }
     }
