@@ -65,10 +65,9 @@ def getNowTimestamp():
 
 # ==============================================================================
 #
-def getValuesFromException(tonException):
-    arg    = tonException.args[0]
-    error  = arg[arg.find("(Data:") + 7 : -1]
-    result = ast.literal_eval(error)
+def getValuesFromException(tonException: TonException):
+    
+    result = tonException.client_error.data
 
     try:
         errorCode = result["exit_code"]
@@ -234,8 +233,8 @@ def callFunction(tonClient: TonClient, abiPath, contractAddress, functionName, f
     except TonException as ton:
         if THROW:
             raise ton
-        (errorCode, errorDesc, transID) = getValuesFromException(ton)
-        return ({}, errorCode, errorDesc, transID)
+        exceptionDetails = getValuesFromException(ton)
+        return ({}, exceptionDetails)
 
 # ==============================================================================
 #

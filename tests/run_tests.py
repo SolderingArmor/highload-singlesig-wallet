@@ -92,7 +92,7 @@ class Test_01_DeployAndTransfer(unittest.TestCase):
         self.assertEqual(result[1]["errorCode"], 0)
 
         result = self.hsig1.sendTransaction(addressDest=self.hsig2.ADDRESS, value=TON, bounce=False, flags=1, payload="", signer=self.hsig2.SIGNER)
-        self.assertEqual(result[1]["errorCode"], 0)
+        self.assertEqual(result[1]["errorCode"], 100)
         
         print("")
         for i in range(0, 60):
