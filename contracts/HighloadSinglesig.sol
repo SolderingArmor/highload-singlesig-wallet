@@ -14,10 +14,6 @@ import "../interfaces/IHighloadSinglesig.sol";
 contract HighloadSinglesig is IHighloadSinglesig
 {
     //========================================
-    // Constants
-    address constant addressZero = address.makeAddrStd(0, 0);
-    
-    //========================================
     // Variables
     mapping(uint256 => uint64) _messages;
     uint32                     _messageCount;
